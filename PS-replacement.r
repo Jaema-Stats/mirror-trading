@@ -1,44 +1,47 @@
-Esperanza = function(s,n)
+esperanza = function(s,n)
 {
   return((2*s - 1)*n)
 }
 
+cambiar = function(dias, i, totales, specialist)
+{
+  cambia = FALSE
+  totales = totales[-1]
+  
+  for(j in 1:length(totales)){
+    if(esperanza(specialist,(dias-i)) < esperanza(totales[j],length(totales)-j)){
+      cambia = TRUE
+    }
+  }
+  
+  return(cambia)
+}
 PS_replacement = function(dias, ganancia, perdida)
 {
- n = dias
- g = ganancia
- p = -perdida
- capital=0
- recorrido=vector()
- 
- i = 0
- 
- cambia = FALSE
- 
- while(cambia == FALSE){
-    a = runif(n-i)
- s=a[1]
- a=c(2:(n-i))
- 
- for(j in 1:length(a)){
-   if(Esperanza(s,(n-i)) < Esperanza(a[j],length(a)-j)){
-     cambia = TRUE
-   }
- }
-
- result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(s, 1-s))
- capital = capital + result
- recorrido <- c(recorrido, capital)
- i=i+1
- }
-
- for(i in 1:n-i ){
- result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(s, 1-s))
- capital = capital + result
- recorrido <- c(recorrido, capital)
- }
- return(recorrido)
+  capital = 0
+  recorrido = vector()
+  i = 0
+  
+  totales = runif(dias-i)
+  
+  specialist = totales[1]
+  
+  while(i < dias){
+    
+    result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(specialist, 1- specialist))
+    recorrido <- c(recorrido, result)
+    capital = capital + result
+    
+    if(cambiar(dias, i, totales, specialist) == TRUE){
+      totales = runif(dias-i)
+      specialist = totales[1]
+    }
+    
+    i = i + 1
+  }
+  
+  return(capital)
 }
 
-PS_replacement(100,1,1)
 
+PS_replacement(10,1,-1)
