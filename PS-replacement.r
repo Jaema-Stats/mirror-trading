@@ -40,15 +40,15 @@ PS_replacement = function(dias, ganancia, perdida)
 }
 
 z=0
-for(i in  1:1000)
+for(i in  1:500)
 {
-  z[i]=Mirror_Trading2(10,1,-1) 
+  z[i]=Mirror_Trading2(1000,1,-1) 
 }
 
 v=0
-for(i in  1:1000)
+for(i in  1:500)
 {
-  v[i]=PS_replacement(10,1,-1) 
+  v[i]=PS_replacement(1000,1,-1) 
 }
 
 mean(z)
