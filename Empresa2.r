@@ -26,10 +26,11 @@ Mirror_Trading2 = function(dias, ganancia, perdida)
     i = i + 1
   }
   
-  plot(recorrido, type = "l", xlab = "Días", ylab = "Capital")
-  abline(h = 0, lty = 3, col = 2)
+  #plot(recorrido, type = "l", xlab = "Días", ylab = "Capital")
+  #abline(h = 0, lty = 3, col = 2)
   
-  print("El capital el día 100 es de:")
-  print(recorrido[dias])
-  print(specialist)
+  #print("El capital el día 100 es de:")
+  return(capital)
+  #print(specialist)
 }
+  
