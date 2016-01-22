@@ -15,18 +15,15 @@ Mirror_Trading2 = function(dias, ganancia, perdida)
   i = i + 1
   
   while(i < dias){
-    if(specialist > 0.9){
-      result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(specialist, 1- specialist))
-      capital = capital + result
-      recorrido <- c(recorrido, capital)
-      i = i + 1
-    }else{
-      result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(specialist, 1- specialist))
-      capital = capital + result
-      recorrido <- c(recorrido, capital)
+    result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(specialist, 1- specialist))
+    capital = capital + result
+    recorrido <- c(recorrido, capital)
+    
+    if(specialist < 0.9){
       specialist <- runif(1, min = 0, max= 1)
-      i = i + 1
     }
+    
+    i = i + 1
   }
   
   plot(recorrido, type = "l", xlab = "Días", ylab = "Capital")
