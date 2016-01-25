@@ -15,7 +15,29 @@ cambiar = function(dias, i, specialist)
   
   return(cambia)
 }
-PS_replacement = function(dias, ganancia, perdida)
+
+cambiar2 = function(dias, i ,specialist)
+{
+  
+  if(dias <= 10){
+    if(i < 6 && specialist < 0.7){
+      specialist = runif(1)
+    }
+    else{
+      if(i > 5 && specialist < 0.5){
+        specialist = runif(1)
+      }
+    }
+  }
+  else{
+    if(cambiar(dias, i, specialist) == TRUE && specialist < 0.9){
+      specialist = runif(1)
+    }
+  }
+  
+  return(specialist)
+}
+PS_replacement = function(dias, ganancia = 1, perdida = -1)
 {
   capital = 0
   recorrido = vector()
@@ -24,33 +46,38 @@ PS_replacement = function(dias, ganancia, perdida)
   specialist = runif(1)
   
   while(i < dias){
-    
+    print(i)
     result = sample(c(ganancia,perdida), 1, replace = TRUE, prob = c(specialist, 1- specialist))
     recorrido <- c(recorrido, result)
     capital = capital + result
     
-    if(cambiar(dias, i, specialist) == TRUE && specialist < 0.9){
-      specialist = runif(1)
-    }
-    
+    specialist = cambiar2(dias, i, specialist)
+
     i = i + 1
   }
   
+  #plot(recorrido, type = "l", xlab = "Días", ylab = "Capital")
+  #abline(h = 0, lty = 3, col = 2)
+  
+  #print("El capital el día 100 es de:")
   return(capital)
 }
 
+#v=PS_replacement(10,1,-1) 
+
 z=0
-for(i in  1:500)
+for(i in  1:1000)
 {
-  z[i]=Mirror_Trading2(1000,1,-1) 
+  z[i]=Mirror_Trading2(10,1,-1) 
 }
 
 v=0
-for(i in  1:500)
+for(j in  1:1000)
 {
-  v[i]=PS_replacement(1000,1,-1) 
+  v[j]=PS_replacement(10,1,-1) 
 }
 
 mean(z)
 mean(v)
+
 
